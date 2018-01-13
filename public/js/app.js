@@ -95,7 +95,7 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
   })
 
   $routeProvider.when("/user/:id", {
-    templateUrl: "../partials/user.html",
+    templateUrl: "../partials/user.html"
   })
 
 }]);
