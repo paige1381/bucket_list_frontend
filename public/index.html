@@ -3,16 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Bucket List</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-sanitize.min.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
     <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body ng-controller="mainController as ctrl">
+  <body ng-controller="MainController as ctrl">
+    <div class="main-container">
 
-    <div class="container">
+      <header>
+        BUCKET LIST
+      </header>
+
+      <div class="content-cointainer" ng-view>
+
+
+      </div>
+
+      <footer>
+        CREATED BY
+        HECTOR GUEVARA | PAGE BOYER | FORYST JANKELA
+        </body>
+      </footer>
 
     </div>
-
   </body>
 </html>
