@@ -1,0 +1,8 @@
+<center>{{ctrl.oneUser.username}}
+<img src="{{ctrl.oneUser.avatar}}"></center>
+
+<div class="list-goal" ng-repeat="goal in ctrl.oneUser.list_items">
+
+  <a href="/goal/{{goal.id}}" ng-click="ctrl.getOne(goal.id)">{{goal.title}}</a>
+
+</div>

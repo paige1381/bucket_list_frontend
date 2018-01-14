@@ -5,26 +5,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.list_items = []
   this.bucket_lists = []
   this.formdata = {}
-
-  this.getOne = () => {
-    $http({
-    url: "http://localhost:3000/list_items/",
-    method: "GET"
-    }).then(response => {
-      this.list_items[0] = response.data
-    }).catch(reject => {
-      console.log('reject: ', reject);
-    });
-  }
-
-  $http({
-    method: 'GET',
-    url: 'http://localhost:3000/users',
-  }).then(response => {
-    this.users = response.data
-  }).catch(reject => {
-    console.log('reject: ', reject);
-  });
+  this.user = {}
+  this.goal = {}
 
   $http({
     method: 'GET',
@@ -32,7 +14,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }).then(response => {
     this.list_items = response.data;
     this.post = this.list_items.id;
-    console.log(this.list_items[0].id);
+    // console.log(this.list_items[0].id);
   }).catch(reject => {
     console.log('reject: ', reject);
   });
@@ -40,9 +22,12 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.getAllPosts = () => {
     $http({
       method: 'GET',
-      url: 'http://localhost:3000/bucket_lists',
+      url: 'http://localhost:3000/list_items',
     }).then(response => {
-      this.bucket_lists = response.data
+      this.list_items = response.data;
+      // console.log(this.list_items);
+      this.user = this.list_items[0].users
+      console.log(this.user);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -50,6 +35,41 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   this.getAllPosts();
 
+  this.getUser = (id) => {
+    $http({
+      url: "http://localhost:3000/users/" + id,
+      method: "GET"
+    }).then(response => {
+      this.oneUser = response.data;
+      console.log(this.oneUser);
+    }).catch(reject => {
+      console.log('reject: ', reject);
+    });
+  }
+
+  this.getOne = (id) => {
+    $http({
+      url: "http://localhost:3000/list_items/" + id,
+      method: "GET"
+    }).then(response => {
+      this.oneGoal = response.data;
+      console.log(this.oneGoal);
+    }).catch(reject => {
+      console.log('reject: ', reject);
+    });
+  }
+
+  this.deleteOne = (id) => {
+    $http({
+      url: "http://localhost:3000/list_items/" + id,
+      method: "DELETE"
+    }).then(response => {
+      this.oneGoal = response.data;
+      console.log(this.oneGoal);
+    }).catch(reject => {
+      console.log('reject: ', reject);
+    });
+  }
 
 
   this.processForm = () => {
@@ -82,12 +102,12 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider, $loca
     templateUrl: "../partials/profile.html"
   })
 
-  $routeProvider.when("/goal/", {
+  $routeProvider.when("/goal/:id", {
     templateUrl: "../partials/one_goal.html"
   })
 
-  $routeProvider.when("/user", {
-    templateUrl: "../partials/one_user.html"
+  $routeProvider.when("/user/:id", {
+    templateUrl: "../partials/user.html"
   })
 
 }]);
