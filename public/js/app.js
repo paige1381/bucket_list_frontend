@@ -59,6 +59,18 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     });
   }
 
+  this.deleteOne = (id) => {
+    $http({
+      url: "http://localhost:3000/list_items/" + id,
+      method: "DELETE"
+    }).then(response => {
+      this.oneGoal = response.data;
+      console.log(this.oneGoal);
+    }).catch(reject => {
+      console.log('reject: ', reject);
+    });
+  }
+
 
   this.processForm = () => {
       $http({
