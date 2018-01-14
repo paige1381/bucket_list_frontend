@@ -8,6 +8,20 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.user = {}
   this.goal = {}
 
+this.url = 'http://localhost:3000';
+  this.login = function(userPass) {
+ console.log(userPass);
+}
+
+$http({
+  method: 'POST',
+  url: this.url + '/users/login',
+  data: { user: { username: userPass.username, password: userPass.password }},
+}).then(function(response) {
+  console.log(response);
+});
+
+
   $http({
     method: 'GET',
     url: 'http://localhost:3000/list_items',
