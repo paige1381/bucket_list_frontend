@@ -124,7 +124,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: "http://localhost:3000/bucket_lists/" + id,
       method: "DELETE"
     }).then(response => {
-      console.log(this.bucket_lists);
+      console.log('post deleted');
       this.bucket_lists.splice(response.data, 1);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -142,10 +142,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: "http://localhost:3000/bucket_lists",
       data: this.newBucket
     }).then(response => {
-      console.log(this.newBucket);
-      console.log(response.data);
       this.bucket_lists.push(response.data)
-      console.log(this.bucket_lists);
     }).catch(error => {
       console.log('error:', error);
     });
