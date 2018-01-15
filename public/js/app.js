@@ -22,8 +22,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       data: {
         user: {
           username: userPass.username,
-          password: userPass.password,
-          user_id: userPass.id
+          password: userPass.password
         }
       },
     }).then(response => {
