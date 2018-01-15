@@ -8,6 +8,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.user = {};
   this.goal = {};
   this.userPass = {};
+  this.loggedIn = false;
 
   //server location
   this.url = 'http://localhost:3000';
@@ -29,6 +30,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       console.log(response);
       this.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
+      this.loggedIn = true;
+      console.log('logged in?:', this.loggedIn);
     });
 }
     //see the secret content
@@ -53,6 +56,11 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     this.logout = ()=> {
       localStorage.clear('token');
       location.reload();
+      this.loggedIn = false;
+      console.log('logged in?:', this.loggedIn);
+      this.user = {};
+      console.log(this.user);
+
     }
 
 
@@ -60,33 +68,38 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
 
 
-
+  // dupe of getAllPosts?
   $http({
     method: 'GET',
     url: 'http://localhost:3000/list_items',
   }).then(response => {
     this.list_items = response.data;
     this.post = this.list_items.id;
+    console.log('logged in?:', this.loggedIn);
   }).catch(reject => {
     console.log('reject: ', reject);
   });
 
+  // get all bucket_lists
   $http({
     method: 'GET',
     url: 'http://localhost:3000/bucket_lists',
   }).then(response => {
     this.bucket_lists = response.data;
+    console.log('logged in?:', this.loggedIn);
   }).catch(reject => {
     console.log('reject: ', reject);
   });
 
+  // get list_items for home page
   this.getAllPosts = () => {
     $http({
       method: 'GET',
       url: 'http://localhost:3000/list_items',
     }).then(response => {
       this.list_items = response.data;
-      this.user = this.bucket_lists.users
+      // this.user = this.bucket_lists.users
+      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -94,6 +107,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   this.getAllPosts();
 
+  // get user info
   this.getUser = (id) => {
     console.log(this.user);
     $http({
@@ -102,11 +116,13 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       this.oneUser = response.data;
       console.log(this.oneUser);
+      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
   }
 
+  // show one list_item
   this.getOne = (id) => {
     $http({
       url: "http://localhost:3000/list_items/" + id,
@@ -114,11 +130,13 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       this.oneGoal = response.data;
       console.log(this.oneGoal);
+      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
   }
 
+  // delete one list_item
   this.deleteOne = (id) => {
     $http({
       url: "http://localhost:3000/bucket_lists/" + id,
@@ -126,11 +144,13 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       console.log(this.bucket_lists);
       this.bucket_lists.splice(response.data, 1);
+      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
   }
 
+  // create new bucket_list
   this.createPost = (post_id, user_id) => {
     console.log("post id: " + post_id + " user id: " + user_id);
     this.newBucket = {
@@ -146,12 +166,14 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       console.log(response.data);
       this.bucket_lists.push(response.data)
       console.log(this.bucket_lists);
+      console.log(this.user);
+      this.getAllPosts();
     }).catch(error => {
       console.log('error:', error);
     });
   }
 
-
+  // create new list_item
   this.processForm = () => {
     $http({
       method: 'POST',
@@ -159,9 +181,10 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       data: this.formdata
     }).then(response => {
       this.post = response.data;
-      this.list_items.push(this.post);
+      this.list_items.unshift(this.post);
       this.createPost(this.post.id, this.user.id)
-      this.getAllPosts();
+      console.log(this.user);
+      this.formdata = {}
     }).catch(error => {
       console.log('error:', error);
     });
