@@ -7,7 +7,6 @@ $( () => {
   const $burgOne = $('.burg1');
   const $burgTwo = $('.burg2');
   const $burgThree = $('.burg3');
-  const $post = $('.list-goal');
   const $close = $('.close-it');
   const $edit = $('.image-cont');
   const $editModal = $('.edit-modal');
@@ -36,19 +35,4 @@ $( () => {
   $edit.on('click', showEdit)
 
 
-const itemColors = [
-  'rgb(255,216,195)',
-  'rgb(238,216,195)',
-  'rgb(221,216,195)',
-  'rgb(204,216,195)'
-]
-
-const randomItemColor = () => {
-  const random = Math.floor(Math.random() * 6)
-  return itemColors[random];
-}
-
-console.log($post);
-
-$('.list-goal').css('background-color', 'black');
 }); // ENDS ONLOAD

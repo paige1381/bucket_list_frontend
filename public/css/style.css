@@ -56,6 +56,14 @@ header {
   width: inherit;
 }
 
+.login-links {
+  cursor: pointer;
+}
+
+.login-links:hover {
+  opacity: .7;
+}
+
 .avatar {
   width: 100px;
   height: 100px;
@@ -242,7 +250,7 @@ main.smaller {
   padding: 20px 30px;
   border-radius: 2.2em;
   width: 450px;
-  height: 450px;
+  min-height: 150px;
   font-family: 'Work Sans', sans-serif;
   letter-spacing: .02em;
 }
