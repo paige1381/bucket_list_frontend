@@ -1,6 +1,15 @@
 
-<center>{{ctrl.oneUser.username}}
-<img class="img" src="{{ctrl.oneUser.avatar}}"></center>
+
+<div class="image-cont">
+  <div class="edit">
+    edit
+  </div>
+  <img src="{{ctrl.oneUser[0].user.avatar}}">
+
+</div>
+
+
+
 
 <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
 
@@ -26,4 +35,3 @@
     <button ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
   </div>
 </div>
-
