@@ -129,13 +129,13 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   // get user info
   this.getUser = (id) => {
-    console.log(this.user);
     $http({
       url: "http://localhost:3000/users/" + id + "/bucket_lists",
       method: "GET"
     }).then(response => {
       this.oneUser = response.data;
-      console.log(this.oneUser);
+      this.oneUser_id = id;
+      console.log(this.oneUser_id);
       console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -151,7 +151,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.oneGoal = response.data;
       this.bucket_list = bucket_list_id;
       console.log(this.oneGoal);
-      console.log('logged in?:', this.loggedIn);
+      console.log('bucket_list_id:', this.bucket_list);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -168,7 +168,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.bucket_lists.splice(response.data, 1);
       console.log('logged in?:', this.loggedIn);
       window.history.back();
-      this.getUser(this.user.id);
+      this.getUser(this.oneUser_id);
       this.getAllPosts();
     }).catch(reject => {
       console.log('reject: ', reject);
