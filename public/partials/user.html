@@ -1,7 +1,7 @@
 <center>{{ctrl.oneUser.username}}
 <img src="{{ctrl.oneUser.avatar}}"></center>
 
-<div class="list-goal" ng-repeat="goal in ctrl.oneUser">
+<div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true">
 
   <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)">{{goal.list_item.title}}</a>
 
