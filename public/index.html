@@ -18,35 +18,16 @@
   <body ng-controller="MainController as ctrl">
     <div class="main-container">
 
-      <!---        AUTH -------->
-      <form ng-submit="ctrl.login(userPass)">
-      <input type="text" ng-model="userPass.username" placeholder="username"/>
-      <input type="password" ng-model="userPass.password" placeholder="password"/>
-      <input type="submit"/>
-    </form>
+    <h3 class="login-links" ng-click="ctrl.loginItemModal = true">Login</h3>
+    <h3 class="login-links" ng-click="ctrl.signUpItemModal = true">Sign up</h3>
 
-    <p>Logged in username: {{ ctrl.user.username }} </p>
+    <p ng-if="ctrl.loggedIn">Welcome back
+      <a href="/user/{{ctrl.user.id}}" ng-click="ctrl.getUser(ctrl.user.id)">{{ ctrl.user.username }}</a>!
+    </p>
 
-    <h4 ng-click="ctrl.getUsers()"> Click to see secret stuff</h4>
-
-    <div> {{ ctrl.error }} </div>
-    <div ng-repeat="user in ctrl.users">
-      <h1>{{ user.username }}</h1>
-    </div>
-
-    <a href="#" ng-click="ctrl.logout()">Log Out</a>
+    <h3 class="login-links" ng-click="ctrl.logout()">Log out</h3>
 
 
-    <label for="register-form">Register</label>
-        <form ng-submit="ctrl.register(regData)">
-          <input type="text" ng-model="regData.username" placeholder="username" />
-          <input type="password" ng-model="regData.password" placeholder="password" />
-          <!-- <input type="password" ng-model="regData.confirmPass" placeholder="confirm password" /> -->
-          <input type="text" ng-model="regData.avatar" placeholder="Avatar url">
-          <button type="submit">Submit</button>
-        </form>
-
-    <!--        AUTH END ----------->
       <header>
         BUCKET LIST
       </header>
@@ -62,5 +43,33 @@
         < <a href="#">FORYST JANKELA</a> >
       </footer> -->
     </div>
+
+    <div class="dim" ng-class="(ctrl.loginItemModal? 'item-modal' : '')">
+      <div class="modal">
+        <h3 class="close" ng-click="ctrl.loginItemModal = false"><i class="material-icons">close</i></h3>
+        <label for="register-form">Login</label>
+        <form ng-submit="ctrl.login(userPass)">
+          <input type="text" ng-model="userPass.username" placeholder="Username"/>
+          <input type="password" ng-model="userPass.password" placeholder="Password"/>
+          <button type="submit" ng-click="ctrl.loginItemModal = false">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="dim" ng-class="(ctrl.signUpItemModal? 'item-modal' : '')">
+      <div class="modal">
+        <h3 class="close" ng-click="ctrl.signUpItemModal = false"><i class="material-icons">close</i></h3>
+        <label for="register-form">Sign up</label>
+            <form ng-submit="ctrl.register(regData)">
+              <input type="text" ng-model="regData.username" placeholder="username" />
+              <input type="password" ng-model="regData.password" placeholder="password" />
+              <input type="text" ng-model="regData.avatar" placeholder="Avatar url">
+              <button type="submit" ng-click="ctrl.signUpItemModal = false">Sign up</button>
+            </form>
+
+      </div>
+    </div>
+
+
   </body>
 </html>

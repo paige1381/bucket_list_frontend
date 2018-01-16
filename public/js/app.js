@@ -12,6 +12,9 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.bucket_list = null;
   this.homeItemModal = false;
   this.profileItemModal = false;
+  this.loginItemModal = false;
+  this.signUpItemModal = false;
+
 
   //server location
   this.url = 'http://localhost:3000';
@@ -34,7 +37,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
       this.loggedIn = true;
-      console.log('logged in?:', this.loggedIn);
     });
 }
     //see the secret content
@@ -60,7 +62,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       localStorage.clear('token');
       location.reload();
       this.loggedIn = false;
-      console.log('logged in?:', this.loggedIn);
       this.user = {};
       console.log(this.user);
 
@@ -98,21 +99,9 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }).then(response => {
     this.list_items = response.data;
     this.post = this.list_items.id;
-    console.log('logged in?:', this.loggedIn);
   }).catch(reject => {
     console.log('reject: ', reject);
   });
-
-  // get all bucket_lists
-  // $http({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/bucket_lists',
-  // }).then(response => {
-  //   this.bucket_lists = response.data;
-  //   console.log('logged in?:', this.loggedIn);
-  // }).catch(reject => {
-  //   console.log('reject: ', reject);
-  // });
 
   // get list_items for home page
   this.getAllPosts = () => {
@@ -121,8 +110,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: 'http://localhost:3000/list_items',
     }).then(response => {
       this.list_items = response.data;
-      console.log(this.itemModal);
-      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -139,7 +126,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.oneUser = response.data;
       this.oneUser_id = id;
       console.log(this.oneUser);
-      console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -169,7 +155,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       console.log('id to delete:', id);
       console.log(this.bucket_lists);
       this.bucket_lists.splice(response.data, 1);
-      console.log('logged in?:', this.loggedIn);
       // window.history.back();
       this.getUser(this.oneUser_id);
       this.getAllPosts();
