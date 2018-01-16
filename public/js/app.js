@@ -10,7 +10,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.userPass = {};
   this.loggedIn = false;
   this.bucket_list = null;
-
+  this.homeItemModal = false;
+  this.profileItemModal = false;
 
   //server location
   this.url = 'http://localhost:3000';
@@ -118,7 +119,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: 'http://localhost:3000/list_items',
     }).then(response => {
       this.list_items = response.data;
-      // this.user = this.bucket_lists.users
+      console.log(this.itemModal);
       console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -167,7 +168,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       console.log(this.bucket_lists);
       this.bucket_lists.splice(response.data, 1);
       console.log('logged in?:', this.loggedIn);
-      window.history.back();
+      // window.history.back();
       this.getUser(this.oneUser_id);
       this.getAllPosts();
     }).catch(reject => {
@@ -244,9 +245,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     templateUrl: "../partials/profile.html"
   })
 
-  $routeProvider.when("/goal/:id", {
-    templateUrl: "../partials/one_goal.html"
-  })
+  // $routeProvider.when("/goal/:id", {
+  //   templateUrl: "../partials/one_goal.html"
+  // })
 
   $routeProvider.when("/user/:id", {
     templateUrl: "../partials/user.html"

@@ -1,20 +1,29 @@
-{{ctrl.oneUser[0].user.username}}
 
-<div class="image-cont">
-  <div class="edit">
-    edit
+<center>{{ctrl.oneUser.username}}
+<img class="img" src="{{ctrl.oneUser.avatar}}"></center>
+
+<div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
+
+  <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
+    {{goal.list_item.title}}
+  <!-- </a> -->
+
+</div>
+
+
+<div class="dim" ng-class="(ctrl.profileItemModal? 'item-modal' : '')">
+  <div class="modal">
+    <h3 class="close" ng-click="ctrl.profileItemModal = false"><i class="material-icons">close</i></h3>
+    <h3>{{ctrl.oneGoal.title}}</h3>
+
+    <h4 ng-if="ctrl.oneGoal.users[0].username">
+      created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id)">{{ctrl.oneGoal.users[0].username}}</a>
+    </h4>
+    <div>
+      <img class="modal-img" src="{{ctrl.oneGoal.img}}" alt="No image found">
+      <p>{{ctrl.oneGoal.content}}</p>
+    </div>
+    <button ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
   </div>
-  <img src="{{ctrl.oneUser[0].user.avatar}}">
 </div>
 
-<div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true">
-
-  <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)">{{goal.list_item.title}}</a>
-
-</div>
-
-<div class="edit-modal">
-<div class="edit-form">
-  EDIT FORM HERE
-</div>
-<div>
