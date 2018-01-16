@@ -64,6 +64,24 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }
 
 
+    //GOT FROM JOSEFINA
+        this.register = (regData) => {
+           console.log(regData);
+
+           $http({
+             method: 'POST',
+             url: this.url + '/users',
+             data: { user: { username: regData.username, password: regData.password }}
+           }).then(response => {
+             console.log(response);
+             this.user = response.data;
+             console.log('USER DATA:', this.user);
+             this.logged = true;
+             this.clickedLog = false;
+             localStorage.setItem('token', JSON.stringify(response.data.token));
+           });
+         }
+    /////////////////HER FAULT IF IT BREAKS//////////////////
 
 
 

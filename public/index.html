@@ -34,6 +34,15 @@
 
     <a href="#" ng-click="ctrl.logout()">Log Out</a>
 
+
+    <label for="register-form">Register</label>
+        <form ng-submit="ctrl.register(regData)">
+          <input type="text" ng-model="regData.username" placeholder="username" />
+          <input type="password" ng-model="regData.password" placeholder="password" />
+          <!-- <input type="password" ng-model="regData.confirmPass" placeholder="confirm password" /> -->
+          <button type="submit">Submit</button>
+        </form>
+
     <!--        AUTH END ----------->
       <header>
         BUCKET LIST
