@@ -9,6 +9,8 @@ $( () => {
   const $burgThree = $('.burg3');
   // const $post = $('.list-goal');
   const $close = $('.close-it');
+  const $edit = $('.image-cont');
+  const $editModal = $('.edit-modal');
 
   // NAV
   const openNav = () => {
@@ -19,6 +21,10 @@ $( () => {
     $main.toggleClass('smaller');
   }
 
+  const showEdit = () => {
+    $editModal.css('display', 'block')
+  }
+
   // const jiggle = () => {
   //   $post(this).toggleClass('jiggle');
   // }
@@ -27,5 +33,6 @@ $( () => {
   $navIcon.on('click', openNav)
   // $post.on('click', jiggle)
   $close.on('click', openNav)
+  $edit.on('click', showEdit)
 
 }); // ENDS ONLOAD

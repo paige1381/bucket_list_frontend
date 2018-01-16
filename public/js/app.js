@@ -135,7 +135,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       this.oneUser = response.data;
       this.oneUser_id = id;
-      console.log(this.oneUser_id);
+      console.log(this.oneUser);
       console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -174,6 +174,18 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       console.log('reject: ', reject);
     });
   }
+
+  this.editAvi = (id) => {
+  $http({
+    method: "PUT",
+    url: "http://localhost:3000/users/" + id,
+    data: this.formData
+  }).then(response => {
+
+  }, error => {
+    console.error(error);
+  }).catch(err => console.error("Catch: ", err));
+}
 
   // create new bucket_list
   this.createPost = (post_id, user_id) => {

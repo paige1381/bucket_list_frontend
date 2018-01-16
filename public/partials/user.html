@@ -1,8 +1,20 @@
-<center>{{ctrl.oneUser.username}}
-<img src="{{ctrl.oneUser.avatar}}"></center>
+{{ctrl.oneUser[0].user.username}}
+
+<div class="image-cont">
+  <div class="edit">
+    edit
+  </div>
+  <img src="{{ctrl.oneUser[0].user.avatar}}">
+</div>
 
 <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true">
 
   <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)">{{goal.list_item.title}}</a>
 
 </div>
+
+<div class="edit-modal">
+<div class="edit-form">
+  EDIT FORM HERE
+</div>
+<div>
