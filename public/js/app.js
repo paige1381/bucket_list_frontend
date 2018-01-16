@@ -67,8 +67,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
     }
 
-
-    //GOT FROM JOSEFINA
         this.register = (regData) => {
            console.log(regData);
 
@@ -87,7 +85,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
              localStorage.setItem('token', JSON.stringify(response.data.token));
            });
          }
-    /////////////////HER FAULT IF IT BREAKS//////////////////
 
 
 
@@ -95,7 +92,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   // dupe of getAllPosts?
   $http({
     method: 'GET',
-    url: 'http://localhost:3000/list_items',
+    url: this.url + '/list_items',
   }).then(response => {
     this.list_items = response.data;
     this.post = this.list_items.id;
@@ -107,7 +104,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.getAllPosts = () => {
     $http({
       method: 'GET',
-      url: 'http://localhost:3000/list_items',
+      url: this.url + '/list_items',
     }).then(response => {
       this.list_items = response.data;
     }).catch(reject => {
@@ -120,7 +117,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   // get user info
   this.getUser = (id) => {
     $http({
-      url: "http://localhost:3000/users/" + id + "/bucket_lists",
+      url: this.url + "/users/" + id + "/bucket_lists",
       method: "GET"
     }).then(response => {
       this.oneUser = response.data;
@@ -134,7 +131,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   // show one list_item
   this.getOne = (list_item_id, bucket_list_id) => {
     $http({
-      url: "http://localhost:3000/list_items/" + list_item_id,
+      url: this.url + "/list_items/" + list_item_id,
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
@@ -149,7 +146,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   // delete one bucket_list
   this.deleteOne = (id) => {
     $http({
-      url: "http://localhost:3000/bucket_lists/" + id,
+      url: this.url + "/bucket_lists/" + id,
       method: "DELETE"
     }).then(response => {
       console.log('id to delete:', id);
@@ -166,7 +163,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.editAvi = (id) => {
   $http({
     method: "PUT",
-    url: "http://localhost:3000/users/" + id,
+    url: this.url + "/users/" + id,
     data: this.formData
   }).then(response => {
 
@@ -184,7 +181,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     };
     $http({
       method: 'POST',
-      url: "http://localhost:3000/bucket_lists",
+      url: this.url + "/bucket_lists",
       data: this.newBucket
     }).then(response => {
       console.log(this.newBucket);
@@ -202,7 +199,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.processForm = () => {
     $http({
       method: 'POST',
-      url: "http://localhost:3000/list_items",
+      url: this.url + "/list_items",
       data: this.formdata
     }).then(response => {
       this.post = response.data;
