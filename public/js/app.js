@@ -17,7 +17,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
 
   //server location
-  this.url = 'http://localhost:3000';
+  this.url = 'https://bucket-list-app-api.herokuapp.com';
 
   // log in function
   this.login = (userPass) => {
