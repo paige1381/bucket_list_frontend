@@ -1,5 +1,5 @@
-<img src="{{ctrl.oneGoal.img}}">
+<img src="{{ctrl.oneGoal.list_item.img}}">
 {{ctrl.oneGoal.title}}
 {{ctrl.oneGoal.content}}
 
-<button ng-click="deleteOne">DELETE</button>
+<button ng-click="ctrl.deleteOne(ctrl.bucket_list)">DELETE</button>

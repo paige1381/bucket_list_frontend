@@ -9,6 +9,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.goal = {};
   this.userPass = {};
   this.loggedIn = false;
+  this.bucket_list = null;
+
 
   //server location
   this.url = 'http://localhost:3000';
@@ -99,15 +101,15 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   });
 
   // get all bucket_lists
-  $http({
-    method: 'GET',
-    url: 'http://localhost:3000/bucket_lists',
-  }).then(response => {
-    this.bucket_lists = response.data;
-    console.log('logged in?:', this.loggedIn);
-  }).catch(reject => {
-    console.log('reject: ', reject);
-  });
+  // $http({
+  //   method: 'GET',
+  //   url: 'http://localhost:3000/bucket_lists',
+  // }).then(response => {
+  //   this.bucket_lists = response.data;
+  //   console.log('logged in?:', this.loggedIn);
+  // }).catch(reject => {
+  //   console.log('reject: ', reject);
+  // });
 
   // get list_items for home page
   this.getAllPosts = () => {
@@ -129,7 +131,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.getUser = (id) => {
     console.log(this.user);
     $http({
-      url: "http://localhost:3000/users/" + id,
+      url: "http://localhost:3000/users/" + id + "/bucket_lists",
       method: "GET"
     }).then(response => {
       this.oneUser = response.data;
@@ -141,12 +143,13 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }
 
   // show one list_item
-  this.getOne = (id) => {
+  this.getOne = (list_item_id, bucket_list_id) => {
     $http({
-      url: "http://localhost:3000/list_items/" + id,
+      url: "http://localhost:3000/list_items/" + list_item_id,
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
+      this.bucket_list = bucket_list_id;
       console.log(this.oneGoal);
       console.log('logged in?:', this.loggedIn);
     }).catch(reject => {
@@ -154,15 +157,19 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     });
   }
 
-  // delete one list_item
+  // delete one bucket_list
   this.deleteOne = (id) => {
     $http({
       url: "http://localhost:3000/bucket_lists/" + id,
       method: "DELETE"
     }).then(response => {
+      console.log('id to delete:', id);
       console.log(this.bucket_lists);
       this.bucket_lists.splice(response.data, 1);
       console.log('logged in?:', this.loggedIn);
+      window.history.back();
+      this.getUser(this.user.id);
+      this.getAllPosts();
     }).catch(reject => {
       console.log('reject: ', reject);
     });
