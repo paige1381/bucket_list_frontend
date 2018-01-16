@@ -1,0 +1,6 @@
+  <div class="list-goal" ng-repeat="goal in ctrl.list_items | orderBy:'updated_at':true">
+    <!-- <a href="/goal/{{goal.id}}" ng-click="ctrl.getOne(goal.id)"> -->
+      {{goal.title}}
+    <!-- </a> -->
+    <a href="/user/{{goal.users[0].id}}" ng-click="ctrl.getUser(goal.users[0].id)">{{goal.users[0].username}}</a>
+  </div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="bucket_list_app">
+  <head>
+    <meta charset="utf-8">
+    <title>Bucket List</title>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-sanitize.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="main-container">
+
+      <!---        AUTH -------->
+      <form ng-submit="ctrl.login(userPass)">
+      <input type="text" ng-model="userPass.username" placeholder="username"/>
+      <input type="password" ng-model="userPass.password" placeholder="password"/>
+      <input type="submit"/>
+    </form>
+
+    <p>Logged in username: {{ ctrl.user.username }} </p>
+
+    <h4 ng-click="ctrl.getUsers()"> Click to see secret stuff</h4>
+
+    <div> {{ ctrl.error }} </div>
+    <div ng-repeat="user in ctrl.users">
+      <h1>{{ user.username }}</h1>
+    </div>
+
+    <a href="#" ng-click="ctrl.logout()">Log Out</a>
+
+    <!--        AUTH END ----------->
+      <header>
+        BUCKET LIST
+      </header>
+      <div class="content-cointainer">
+      <nav ng-include="'/partials/nav.html'"></nav>
+      <main ng-view>
+      </main>
+      </div>
+      <!-- <footer>
+        CREATED BY<br>
+        < <a href="#">HECTOR GUEVARA</a> ><br>
+        < <a href="#">PAGE BOYER</a> ><br>
+        < <a href="#">FORYST JANKELA</a> >
+      </footer> -->
+    </div>
+  </body>
+</html>
