@@ -74,7 +74,9 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
            $http({
              method: 'POST',
              url: this.url + '/users',
-             data: { user: { username: regData.username, password: regData.password }}
+             data: { user: { username: regData.username, password: regData.password,
+             avatar: regData.avatar
+             }}
            }).then(response => {
              console.log(response);
              this.user = response.data;
