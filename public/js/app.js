@@ -92,7 +92,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   // dupe of getAllPosts?
   $http({
     method: 'GET',
-    url: this.url + '/list_items',
+    url: this.url + "/list_items",
   }).then(response => {
     this.list_items = response.data;
     this.post = this.list_items.id;
