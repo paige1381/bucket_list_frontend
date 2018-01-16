@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="bucket_list_app">
+  <head>
+    <meta charset="utf-8">
+    <title>Bucket List</title>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-sanitize.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="main-container">
+
+    <h3 class="login-links" ng-click="ctrl.loginItemModal = true">Login</h3>
+    <h3 class="login-links" ng-click="ctrl.signUpItemModal = true">Sign up</h3>
+
+    <p ng-if="ctrl.loggedIn">Welcome back
+      <a href="/user/{{ctrl.user.id}}" ng-click="ctrl.getUser(ctrl.user.id)">{{ ctrl.user.username }}</a>!
+    </p>
+
+    <h3 class="login-links" ng-click="ctrl.logout()">Log out</h3>
+
+
+      <header>
+        BUCKET LIST
+      </header>
+      <div class="content-cointainer">
+      <nav ng-include="'/partials/nav.html'"></nav>
+      <main ng-view>
+      </main>
+      </div>
+      <!-- <footer>
+        CREATED BY<br>
+        < <a href="#">HECTOR GUEVARA</a> ><br>
+        < <a href="#">PAGE BOYER</a> ><br>
+        < <a href="#">FORYST JANKELA</a> >
+      </footer> -->
+    </div>
+
+    <div class="dim" ng-class="(ctrl.loginItemModal? 'item-modal' : '')">
+      <div class="modal">
+        <h3 class="close" ng-click="ctrl.loginItemModal = false"><i class="material-icons">close</i></h3>
+        <label for="register-form">Login</label>
+        <form ng-submit="ctrl.login(userPass)">
+          <input type="text" ng-model="userPass.username" placeholder="Username"/>
+          <input type="password" ng-model="userPass.password" placeholder="Password"/>
+          <button type="submit" ng-click="ctrl.loginItemModal = false">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="dim" ng-class="(ctrl.signUpItemModal? 'item-modal' : '')">
+      <div class="modal">
+        <h3 class="close" ng-click="ctrl.signUpItemModal = false"><i class="material-icons">close</i></h3>
+        <label for="register-form">Sign up</label>
+            <form ng-submit="ctrl.register(regData)">
+              <input type="text" ng-model="regData.username" placeholder="username" />
+              <input type="password" ng-model="regData.password" placeholder="password" />
+              <input type="text" ng-model="regData.avatar" placeholder="Avatar url">
+              <button type="submit" ng-click="ctrl.signUpItemModal = false">Sign up</button>
+            </form>
+
+      </div>
+    </div>
+
+
+  </body>
+</html>
