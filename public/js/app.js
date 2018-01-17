@@ -116,7 +116,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.oneUser = response.data;
       this.oneUser_id = id;
       console.log('this.oneUser:', this.oneUser);
-      this.dragDropLists(this.oneUser);
+      this.getTodoList(this.oneUser_id);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -129,9 +129,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
-      // this.bucket_list = bucket_list_id;
       console.log('this.oneGoal:', this.oneGoal);
-      // console.log('this.bucket_list:', this.bucket_list);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -154,7 +152,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.editAvi = (id) => {
     $http({
       method: "PUT",
-      url: "http://localhost:3000/users/" + id,
+      url: this.url + "/users/" + id,
       data: this.formData,
       headers: {
         Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
@@ -205,32 +203,91 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }
 
   // Experimenting!!!
-  this.dragDropLists = (user) => {
+
+  this.getTodoList = (id) => {
+    $http({
+      url: this.url + "/users/" + id + "/bucket_lists/todo",
+      method: "GET"
+    }).then(response => {
+      this.todoList = response.data;
+      this.getCompletedList(id, this.todoList)
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+  this.getCompletedList = (id, todoList) => {
+    $http({
+      url: this.url + "/users/" + id + "/bucket_lists/completed",
+      method: "GET"
+    }).then(response => {
+      this.completedList = response.data;
+      this.dragDropLists(todoList, this.completedList)
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+
+  this.dragDropLists = (todoList, completedList) => {
     $scope.models = {
         selected: null,
         lists: {"todo": [], "completed": []}
     };
 
-    for (let i = 0; i < user.length; i++) {
+    for (let i = 0; i < todoList.length; i++) {
       $scope.models.lists.todo.push({
-        label: user[i].list_item.title,
-        list_item_id: user[i].list_item.id,
-        id: user[i].id
+        label: todoList[i].list_item.title,
+        list_item_id: todoList[i].list_item.id,
+        id: todoList[i].id
       })
     }
 
-    $scope.$watch('models', function(model) {
-      $scope.modelAsJson = angular.toJson(model, true);
-    }, true);
+    for (let i = 0; i < completedList.length; i++) {
+      $scope.models.lists.completed.push({
+        label: completedList[i].list_item.title,
+        list_item_id: completedList[i].list_item.id,
+        id: completedList[i].id
+      })
+    }
+
   }
 
-  this.updateCompleted = (id) => {
-    console.log('item ' + id + ' is complete');
+  this.getOneBucketList = (id, completed) => {
+    $http({
+      url: this.url + "bucket_lists/" + id,
+      method: "GET"
+    }).then(response => {
+      this.bucket_list = response.data;
+      console.log(this.bucket_list);
+      this.updateOneBucketList(this.bucket_list, completed)
+    }).catch(error => {
+      console.log('error:', error);
+    });
   }
 
-  this.updateTodo = (id) => {
-    console.log('item ' + id + ' is not complete');
+  this.updateOneBucketList = (bucketList, completed) => {
+    console.log(bucketList);
+    console.log(bucketList.id + ' completed?', completed);
+    $http({
+      method: "PUT",
+      url: this.url + "bucket_lists/" + bucketList.id,
+      data: {
+        bucket_list: {
+          user_id: bucketList.user_id,
+          list_item_id: bucketList.list_item_id,
+          completed: completed
+        }
+      }
+    }).then(response => {
+      bucketList.completed = completed;
+      console.log(response.data);
+      console.log(bucketList);
+    }).catch(error => {
+      console.log('error:', error);
+    });
   }
+
 
 
 }]);

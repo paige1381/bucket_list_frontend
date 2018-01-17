@@ -278,7 +278,7 @@ main {
 .todo-items {
   display: flex;
   flex-direction: row;
-  min-height: 65px;
+  height: 100%;
 }
 
 .complete {
