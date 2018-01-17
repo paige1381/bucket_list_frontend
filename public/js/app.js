@@ -222,7 +222,14 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     $scope.$watch('models', function(model) {
       $scope.modelAsJson = angular.toJson(model, true);
     }, true);
+  }
 
+  this.updateCompleted = (id) => {
+    console.log('item ' + id + ' is complete');
+  }
+
+  this.updateTodo = (id) => {
+    console.log('item ' + id + ' is not complete');
   }
 
 
