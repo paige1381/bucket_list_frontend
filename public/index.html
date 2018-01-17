@@ -12,36 +12,35 @@
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/jquery.js"></script>
     <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link href="https://fonts.googleapis.com/css?family=Mukta+Malar:400,800" rel="stylesheet">
   </head>
   <body ng-controller="MainController as ctrl">
+
     <div class="main-container">
-
-    <h3 class="login-links" ng-click="ctrl.loginItemModal = true">Login</h3>
-    <h3 class="login-links" ng-click="ctrl.signUpItemModal = true">Sign up</h3>
-
-    <p ng-if="ctrl.loggedIn">Welcome back
-      <a href="/user/{{ctrl.user.id}}" ng-click="ctrl.getUser(ctrl.user.id)">{{ ctrl.user.username }}</a>!
-    </p>
-
-    <h3 class="login-links" ng-click="ctrl.logout()">Log out</h3>
-
-
       <header>
-        BUCKET LIST
+        <ul>
+          <li class="login-links" ng-click="ctrl.loginItemModal = true">login</h3>
+          <li class="login-links" ng-click="ctrl.signUpItemModal = true">register</h3>
+        </li>
+      </ul>
+        <!-- <p ng-if="ctrl.loggedIn">Welcome back
+          <a href="/user/{{ctrl.user.id}}" ng-click="ctrl.getUser(ctrl.user.id)">{{ ctrl.user.username }}</a>!
+        </p> -->
+
+        <!-- <h3 class="login-links" ng-click="ctrl.logout()">Log out</h3> -->
       </header>
-      <div class="content-cointainer">
+
+    <div class="content-container">
       <nav ng-include="'/partials/nav.html'"></nav>
       <main ng-view>
       </main>
       </div>
-      <!-- <footer>
-        CREATED BY<br>
-        < <a href="#">HECTOR GUEVARA</a> ><br>
-        < <a href="#">PAGE BOYER</a> ><br>
-        < <a href="#">FORYST JANKELA</a> >
-      </footer> -->
+      <footer>
+        <div class="created">CREATED</div> <div class="by">BY</div>
+        <div class="team"><a href="https://github.com/hectorlito">HECTOR</a> | <a href="https://github.com/paige1381">PAIGE</a> | <a href="https://github.com/forystj">FORYST</a></div>
+      </footer>
     </div>
 
     <div class="dim" ng-class="(ctrl.loginItemModal? 'item-modal' : '')">
