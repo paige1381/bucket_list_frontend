@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/paige1381/bucket_list_frontend#readme",
   "dependencies": {
+    "angular-drag-and-drop-lists": "^2.1.0",
     "bcrypt": "^1.0.3",
     "express": "^4.16.2"
   }
