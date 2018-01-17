@@ -5,24 +5,64 @@
   </div>
 
   <div class="user-lists">
-    <div class="todo">
-      <h2>to do</h2>
-      <div class="todo-items">
-        <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
-
-          <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
-            {{goal.list_item.title}}
-          <!-- </a> -->
+      <div class="todo">
+        <h2>to do</h2>
+        <div dnd-list="models.lists.todo" class="todo-items">
+          <div
+          class="list-goal"
+          ng-repeat="item in models.lists.todo"
+          dnd-draggable="item"
+          dnd-moved="models.lists.todo.splice($index, 1)"
+          dnd-effect-allowed="move"
+          dnd-selected="models.selected = item"
+          ng-class="{'selected': models.selected === item}"
+          draggable="true"
+          ng-click="ctrl.profileItemModal = true; ctrl.getOne(item.list_item_id, item.id)">
+          {{item.label}}
+          </div>
+        </div>
+      </div>
+      <div dnd-list="models.lists.completed" class="complete">
+        <h2>complete</h2>
+        <div class="todo-items">
+          <div
+          class="list-goal"
+          ng-repeat="item in models.lists.completed"
+          dnd-draggable="item"
+          dnd-moved="models.lists.completed.splice($index, 1)"
+          dnd-effect-allowed="move"
+          dnd-selected="models.selected = item"
+          ng-class="{'selected': models.selected === item}"
+          draggable="true"
+          ng-click="ctrl.profileItemModal = true; ctrl.getOne(item.list_item_id, item.id)">
+          {{item.label}}
+          </div>
         </div>
       </div>
     </div>
-    <div class="complete">
-      <h2>complete</h2>
-      <div class="todo-items">
+
+
+  <!-- <div class="user-lists">
+      <div class="todo">
+        <h2>to do</h2>
+        <div class="todo-items">
+          <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
+              {{goal.list_item.title}}
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="complete">
+        <h2>complete</h2>
+        <div class="todo-items">
+          <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
+              {{goal.list_item.title}}
+          </div>
+        </div>
+      </div>
+    </div> -->
+
   </div>
-</div>
+
 
 <div ng-if="ctrl.editAvi">
   <form ng-submit="ctrl.editAvi(ctrl.oneUser[0].user.id)">
@@ -38,7 +78,7 @@
     <h3>{{ctrl.oneGoal.title}}</h3>
 
     <h4 ng-if="ctrl.oneGoal.users[0].username">
-      created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id)">{{ctrl.oneGoal.users[0].username}}</a>
+      created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id); ctrl.profileItemModal = false">{{ctrl.oneGoal.users[0].username}}</a>
     </h4>
     <div>
       <img class="modal-img" src="{{ctrl.oneGoal.img}}" alt="No image found">
