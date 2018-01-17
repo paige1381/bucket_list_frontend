@@ -7,15 +7,19 @@
   <div class="user-lists">
     <div class="todo">
       <h2>to do</h2>
-      <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
+      <div class="todo-items">
+        <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
 
-        <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
-          {{goal.list_item.title}}
-        <!-- </a> -->
+          <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
+            {{goal.list_item.title}}
+          <!-- </a> -->
+        </div>
       </div>
     </div>
     <div class="complete">
       <h2>complete</h2>
+      <div class="todo-items">
+      </div>
     </div>
   </div>
 </div>

@@ -270,9 +270,14 @@ main {
   background: #f4f4f4;
   float: left;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border-radius: 1em 1em 0 0;
   margin-right: 10px;
+}
+
+.todo-items {
+  display: flex;
+  flex-direction: row;
 }
 
 .complete {
