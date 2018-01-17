@@ -1,22 +1,30 @@
-
-
-<div class="image-cont">
-  <div class="edit">
-    edit
+<div class="user-cont">
+  <div class="user-head">
+    <img src="{{ctrl.oneUser[0].user.avatar}}">
+    <h1>{{ctrl.oneUser[0].user.username}}</h1>
   </div>
-  <img src="{{ctrl.oneUser[0].user.avatar}}">
 
+  <div class="user-lists">
+    <div class="todo">
+      <h2>to do</h2>
+      <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
+
+        <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
+          {{goal.list_item.title}}
+        <!-- </a> -->
+      </div>
+    </div>
+    <div class="complete">
+      <h2>complete</h2>
+    </div>
+  </div>
 </div>
 
-
-
-
-<div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
-
-  <!-- <a href="/goal/{{goal.list_item.id}}" ng-click="ctrl.getOne(goal.list_item.id, goal.id)"> -->
-    {{goal.list_item.title}}
-  <!-- </a> -->
-
+<div ng-if="ctrl.editAvi">
+  <form ng-submit="ctrl.editAvi(ctrl.oneUser[0].user.id)">
+    <input ng-model="ctrl.formData.avatar" type="text" value="{{ctrl.oneUser[0].user.avatar}}">
+     <button type="submit" name="button">Edit Avatar</button>
+  </form>
 </div>
 
 

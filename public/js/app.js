@@ -17,7 +17,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
 
   //server location
-  this.url = 'https://bucket-list-app-api.herokuapp.com';
+  this.url = 'http://localhost:3000/';
 
   // log in function
   this.login = (userPass) => {
@@ -161,16 +161,29 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }
 
   this.editAvi = (id) => {
-  $http({
-    method: "PUT",
-    url: this.url + "/users/" + id,
-    data: this.formData
-  }).then(response => {
-
-  }, error => {
-    console.error(error);
-  }).catch(err => console.error("Catch: ", err));
-}
+    console.log(this.formData);
+    console.log(id);
+    $http({
+      method: "PUT",
+      url: "http://localhost:3000/users/" + id,
+      data: this.formData,
+      headers: {
+               Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+      }
+    }).then(response => {
+      console.log(response);
+      console.log(this.formData);
+      this.oneUser[0].user.avatar = this.formData.avatar
+      // this.editAvi=false;
+    //   const updateByIndex = this.users.findIndex(user => user._id === response.data._id)
+    //  this.users.splice(updateByIndex, 1, response.data)
+    //  console.log(this.oneUser[0].user);
+    //  this.oneUser = response.data
+    //  this.formData = {};
+    }, error => {
+      console.error(error);
+    }).catch(err => console.error("Catch: ", err));
+  }
 
   // create new bucket_list
   this.createPost = (post_id, user_id) => {
