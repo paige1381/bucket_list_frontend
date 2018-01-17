@@ -169,7 +169,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     url: "http://localhost:3000/users/" + id,
     data: this.formData
   }).then(response => {
-
+    this.editavi=false;
   }, error => {
     console.error(error);
   }).catch(err => console.error("Catch: ", err));
