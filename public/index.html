@@ -21,9 +21,11 @@
     <div class="main-container">
       <header>
         <ul>
-          <li class="login-links" ng-click="ctrl.loginItemModal = true">login</h3>
+          <li class="login-links" ng-click="ctrl.loginItemModal = true">log in</h3>
           <li class="login-links" ng-click="ctrl.signUpItemModal = true">register</h3>
         </li>
+
+        <span ng-click="shownav=true">hi</span>
       </ul>
         <!-- <p ng-if="ctrl.loggedIn">Welcome back
           <a href="/user/{{ctrl.user.id}}" ng-click="ctrl.getUser(ctrl.user.id)">{{ ctrl.user.username }}</a>!
@@ -33,39 +35,59 @@
       </header>
 
     <div class="content-container">
-      <nav ng-include="'/partials/nav.html'"></nav>
+
+      <nav ng-include="'/partials/nav.html'" ng-show="shownav"></nav>
+
       <main ng-view>
       </main>
       </div>
       <footer>
-        <div class="created">CREATED</div> <div class="by">BY</div>
+        <div class="created">CREATED</div><div class="by">BY</div>
         <div class="team"><a href="https://github.com/hectorlito">HECTOR</a> | <a href="https://github.com/paige1381">PAIGE</a> | <a href="https://github.com/forystj">FORYST</a></div>
       </footer>
     </div>
 
     <div class="dim" ng-class="(ctrl.loginItemModal? 'item-modal' : '')">
       <div class="modal">
-        <h3 class="close" ng-click="ctrl.loginItemModal = false"><i class="material-icons">close</i></h3>
-        <label for="register-form">Login</label>
+        <!-- <h3 class="close" ng-click="ctrl.loginItemModal = false"><i class="material-icons">close</i></h3> -->
+        <h3 class="log-reg">log in</h3>
         <form ng-submit="ctrl.login(userPass)">
           <input type="text" ng-model="userPass.username" placeholder="Username"/>
           <input type="password" ng-model="userPass.password" placeholder="Password"/>
-          <button type="submit" ng-click="ctrl.loginItemModal = false">Login</button>
+          <button type="submit" ng-click="ctrl.loginItemModal = false">submit</button>
         </form>
       </div>
     </div>
 
     <div class="dim" ng-class="(ctrl.signUpItemModal? 'item-modal' : '')">
       <div class="modal">
-        <h3 class="close" ng-click="ctrl.signUpItemModal = false"><i class="material-icons">close</i></h3>
-        <label for="register-form">Sign up</label>
-            <form ng-submit="ctrl.register(regData)">
-              <input type="text" ng-model="regData.username" placeholder="username" />
-              <input type="password" ng-model="regData.password" placeholder="password" />
-              <input type="text" ng-model="regData.avatar" placeholder="Avatar url">
-              <button type="submit" ng-click="ctrl.signUpItemModal = false">Sign up</button>
-            </form>
+        <!-- <h3 class="close" ng-click="ctrl.signUpItemModal = false"><i class="material-icons">close</i></h3> -->
+        <h3 class="log-reg">register</h3>
+          <form ng-submit="ctrl.register(regData)">
+            <input type="text" ng-model="regData.username" placeholder="username" />
+            <input type="password" ng-model="regData.password" placeholder="password" />
+            <input type="text" ng-model="regData.avatar" placeholder="Avatar url">
+            <button type="submit" ng-click="ctrl.signUpItemModal = false">submit</button>
+          </form>
+      </div>
+    </div>
 
+    <div class="dim" ng-class="(ctrl.createPostModal? 'item-modal' : '')">
+      <div class="modal new">
+        <div class="left">
+        <h3 class="new-goal-modal">add new goal</h3>
+          <form ng-submit="ctrl.processForm()">
+            <div class="goal-inputs">
+              <input class="new-goal" type = "text" ng-model="ctrl.formdata.title" placeholder="Goal Title">
+              <input class="new-goal" type = "text" ng-model="ctrl.formdata.img" placeholder="Image URL">
+              <input type="hidden" ng-model="ctrl.formdata.user.id">
+              <textarea type="text" ng-model="ctrl.formdata.content" placeholder="About Your Goal"></textarea>
+            </div>
+            <div class="new-button">
+              <button class="new-submit" type="submit" ng-click="ctrl.createPostModal = false">➡</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 

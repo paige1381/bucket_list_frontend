@@ -14,6 +14,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.profileItemModal = false;
   this.loginItemModal = false;
   this.signUpItemModal = false;
+  this.createPostModal = false;
+  this.navIn = true;
 
 
   //server location
