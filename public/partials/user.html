@@ -1,6 +1,11 @@
 <div class="user-cont">
   <div class="user-head">
-    <img src="{{ctrl.oneUser[0].user.avatar}}">
+    <div class="av-cont">
+      <div class="edit" ng-click="ctrl.editAvatarModal = true">
+      ✎ edit
+      </div>
+      <img class="user-av" src="{{ctrl.oneUser[0].user.avatar}}">
+    </div>
     <h1>{{ctrl.oneUser[0].user.username}}</h1>
   </div>
 
@@ -9,7 +14,7 @@
         <h2>to do</h2>
         <div dnd-list="models.lists.todo" class="todo-items">
           <div
-          class="list-goal"
+          class="list-goal jiggle"
           ng-repeat="item in models.lists.todo"
           dnd-draggable="item"
           dnd-moved="models.lists.todo.splice($index, 1); ctrl.getOneBucketList(item.id, true)"
@@ -26,7 +31,7 @@
         <h2>complete</h2>
         <div class="todo-items">
           <div
-          class="list-goal"
+          class="list-goal jiggle"
           ng-repeat="item in models.lists.completed"
           dnd-draggable="item"
           dnd-moved="models.lists.completed.splice($index, 1); ctrl.getOneBucketList(item.id, false)"
@@ -43,27 +48,41 @@
 
   </div>
 
-
-<div ng-if="ctrl.editAvi">
-  <form ng-submit="ctrl.editAvi(ctrl.oneUser[0].user.id)">
-    <input ng-model="ctrl.formData.avatar" type="text" value="{{ctrl.oneUser[0].user.avatar}}">
-     <button type="submit" name="button">Edit Avatar</button>
-  </form>
+<div class="dim" ng-class="(ctrl.profileItemModal? 'item-modal' : '')">
+  <div class="modal">
+    <div class="close-box"><h3 class="close-modal" ng-click="ctrl.profileItemModal = false"><i class="material-icons">close</i></h3></div>
+    <div class="show-cont">
+      <div class="show-left">
+        <h4 class="created-by" ng-if="ctrl.oneGoal.users[0].username">
+          created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id); ctrl.homeItemModal = false">{{ctrl.oneGoal.users[0].username}}</a>
+        </h4>
+        <img src="{{ctrl.oneGoal.img}}" alt="No image found">
+      </div>
+      <div class="show-right">
+        <h3 class="show-post">{{ctrl.oneGoal.title}}</h3>
+        <p>{{ctrl.oneGoal.content}}</p>
+      </div>
+        <button class="new-button delete" ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
+    </div>
+  </div>
 </div>
 
 
-<div class="dim" ng-class="(ctrl.profileItemModal? 'item-modal' : '')">
-  <div class="modal">
-    <h3 class="close" ng-click="ctrl.profileItemModal = false"><i class="material-icons">close</i></h3>
-    <h3>{{ctrl.oneGoal.title}}</h3>
 
-    <h4 ng-if="ctrl.oneGoal.users[0].username">
-      created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id); ctrl.profileItemModal = false">{{ctrl.oneGoal.users[0].username}}</a>
-    </h4>
-    <div>
-      <img class="modal-img" src="{{ctrl.oneGoal.img}}" alt="No image found">
-      <p>{{ctrl.oneGoal.content}}</p>
+<div class="dim" ng-class="(ctrl.editAvatarModal? 'item-modal' : '')">
+  <div class="modal new">
+    <div class="close-box"><h3 class="close-modal" ng-click="ctrl.editAvatarModal = false"><i class="material-icons">close</i></h3></div>
+    <div class="left">
+    <h3 class="edit-av-modal">change your avatar</h3>
+      <form ng-submit="ctrl.editAvi(ctrl.oneUser[0].user.id)">
+        <div class="edit-avatar-form" ng-if="ctrl.editAvi">
+          <div class="change-av-form">
+            <h4 class="new-image">new image</h4>
+            <input ng-model="ctrl.formData.avatar" type="text" value="{{ctrl.oneUser[0].user.avatar}}" placeholder="url">
+           <button type="submit" name="button">edit</button>
+        </div>
+        </div>
+      </form>
     </div>
-    <button ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
   </div>
 </div>

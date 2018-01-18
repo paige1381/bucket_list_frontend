@@ -17,8 +17,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
 
   //server location
-  // this.url = 'http://localhost:3000/';
-  this.url = 'https://bucket-list-app-api.herokuapp.com/';
+  this.url = 'http://localhost:3000/';
 
   // log in function
   this.login = (userPass) => {
@@ -130,7 +129,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
-      this.bucket_list = bucket_list_id;
       console.log('this.oneGoal:', this.oneGoal);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -139,7 +137,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   // delete one bucket_list
   this.deleteOne = (id) => {
-    console.log(id);
     $http({
       url: this.url + "/bucket_lists/" + id,
       method: "DELETE"
@@ -258,7 +255,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   this.getOneBucketList = (id, completed) => {
     $http({
-      url: this.url + "bucket_lists/" + id,
+      url: this.url + "/bucket_lists/" + id,
       method: "GET"
     }).then(response => {
       this.bucket_list = response.data;
@@ -274,7 +271,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     console.log(bucketList.id + ' completed?', completed);
     $http({
       method: "PUT",
-      url: this.url + "bucket_lists/" + bucketList.id,
+      url: this.url + "/bucket_lists/" + bucketList.id,
       data: {
         bucket_list: {
           user_id: bucketList.user_id,
