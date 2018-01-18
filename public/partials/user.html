@@ -14,7 +14,7 @@
         <h2>to do</h2>
         <div dnd-list="models.lists.todo" class="todo-items">
           <div
-          class="list-goal"
+          class="list-goal jiggle"
           ng-repeat="item in models.lists.todo"
           dnd-draggable="item"
           dnd-moved="models.lists.todo.splice($index, 1); ctrl.getOneBucketList(item.id, true)"
@@ -31,7 +31,7 @@
         <h2>complete</h2>
         <div class="todo-items">
           <div
-          class="list-goal"
+          class="list-goal jiggle"
           ng-repeat="item in models.lists.completed"
           dnd-draggable="item"
           dnd-moved="models.lists.completed.splice($index, 1); ctrl.getOneBucketList(item.id, false)"

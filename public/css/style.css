@@ -412,11 +412,13 @@ h3.close {
   font-size: 24px;
   margin-top: 5px;
   padding: 0;
+  cursor: pointer;
 }
 
 h3.close-modal {
   line-height: 20px;
   margin: 0;
+  cursor: pointer;
 }
 
 .close-box {
