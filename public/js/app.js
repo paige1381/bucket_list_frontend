@@ -40,24 +40,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     });
   }
 
-  //see the secret content
-  // this.getUsers = () => {
-  //   $http({
-  //     url: this.url + '/users',
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-  //     }
-  //   }).then(response => {
-  //     console.log(response);
-  //     if (response.data.status == 401) {
-  //       this.error = "Unauthorized";
-  //     } else {
-  //       this.users = response.data;
-  //     }
-  //   });
-  // }
-
   //logout
   this.logout = ()=> {
     localStorage.clear('token');
@@ -83,16 +65,6 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
      });
    }
 
-  // dupe of getAllPosts?
-  // $http({
-  //   method: 'GET',
-  //   url: this.url + "/list_items",
-  // }).then(response => {
-  //   this.list_items = response.data;
-  //   this.post = this.list_items.id;
-  // }).catch(reject => {
-  //   console.log('reject: ', reject);
-  // });
 
   // get list_items for home page
   this.getAllPosts = () => {
@@ -131,6 +103,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       this.oneGoal = response.data;
       console.log('this.oneGoal:', this.oneGoal);
+      this.bucket_list = bucket_list_id;
     }).catch(reject => {
       console.log('reject: ', reject);
     });
