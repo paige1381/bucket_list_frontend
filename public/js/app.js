@@ -1,4 +1,4 @@
-const app = angular.module('bucket_list_app', ['ngRoute', 'ngSanitize']);
+const app = angular.module('bucket_list_app', ['ngRoute', 'ngSanitize', 'dndLists']);
 
 app.controller('MainController', ['$http', '$scope', '$sce', function($http, $scope, $sce) {
   this.users = [];
@@ -15,15 +15,14 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.loginItemModal = false;
   this.signUpItemModal = false;
   this.createPostModal = false;
-  this.navIn = true;
-
+  this.editAvatarModal = false;
+  this.openTheNav = false;
 
   //server location
-  this.url = 'http://localhost:3000/';
+  this.url = 'http://localhost:3000';
 
   // log in function
   this.login = (userPass) => {
-    console.log(userPass);
     $http({
       method: 'POST',
       url: this.url + '/users/login',
@@ -35,72 +34,66 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
         }
       },
     }).then(response => {
-      console.log(response);
       this.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
       this.loggedIn = true;
+      console.log('this.user:', this.user);
     });
-}
-    //see the secret content
-    this.getUsers = () => {
-      $http({
-        url: this.url + '/users',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-        }
-      }).then(response => {
-        console.log(response);
-        if (response.data.status == 401) {
-          this.error = "Unauthorized";
-        } else {
-          this.users = response.data;
-        }
-      });
-    }
+  }
 
-    //logout
-    this.logout = ()=> {
-      localStorage.clear('token');
-      location.reload();
-      this.loggedIn = false;
-      this.user = {};
-      console.log(this.user);
+  //see the secret content
+  // this.getUsers = () => {
+  //   $http({
+  //     url: this.url + '/users',
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+  //     }
+  //   }).then(response => {
+  //     console.log(response);
+  //     if (response.data.status == 401) {
+  //       this.error = "Unauthorized";
+  //     } else {
+  //       this.users = response.data;
+  //     }
+  //   });
+  // }
 
-    }
+  //logout
+  this.logout = ()=> {
+    localStorage.clear('token');
+    location.reload();
+    this.loggedIn = false;
+    this.user = {};
+    console.log('this.user:', this.user);
+  }
 
-        this.register = (regData) => {
-           console.log(regData);
-
-           $http({
-             method: 'POST',
-             url: this.url + '/users',
-             data: { user: { username: regData.username, password: regData.password,
-             avatar: regData.avatar
-             }}
-           }).then(response => {
-             console.log(response);
-             this.user = response.data;
-             console.log('USER DATA:', this.user);
-             this.logged = true;
-             this.clickedLog = false;
-             localStorage.setItem('token', JSON.stringify(response.data.token));
-           });
-         }
-
-
-
+  this.register = (regData) => {
+     $http({
+       method: 'POST',
+       url: this.url + '/users',
+       data: { user: { username: regData.username, password: regData.password,
+       avatar: regData.avatar
+       }}
+     }).then(response => {
+       this.user = response.data;
+       this.logged = true;
+       this.clickedLog = false;
+       localStorage.setItem('token', JSON.stringify(response.data.token));
+       console.log('this.user:', this.user);
+     });
+   }
 
   // dupe of getAllPosts?
-  $http({
-    method: 'GET',
-    url: this.url + "/list_items",
-  }).then(response => {
-    this.list_items = response.data;
-    this.post = this.list_items.id;
-  }).catch(reject => {
-    console.log('reject: ', reject);
-  });
+  // $http({
+  //   method: 'GET',
+  //   url: this.url + "/list_items",
+  // }).then(response => {
+  //   this.list_items = response.data;
+  //   this.post = this.list_items.id;
+  // }).catch(reject => {
+  //   console.log('reject: ', reject);
+  // });
 
   // get list_items for home page
   this.getAllPosts = () => {
@@ -124,7 +117,8 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
     }).then(response => {
       this.oneUser = response.data;
       this.oneUser_id = id;
-      console.log(this.oneUser);
+      console.log('this.oneUser:', this.oneUser);
+      this.getTodoList(this.oneUser_id);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -137,9 +131,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
-      this.bucket_list = bucket_list_id;
-      console.log(this.oneGoal);
-      console.log('bucket_list_id:', this.bucket_list);
+      console.log('this.oneGoal:', this.oneGoal);
     }).catch(reject => {
       console.log('reject: ', reject);
     });
@@ -151,10 +143,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: this.url + "/bucket_lists/" + id,
       method: "DELETE"
     }).then(response => {
-      console.log('id to delete:', id);
-      console.log(this.bucket_lists);
       this.bucket_lists.splice(response.data, 1);
-      // window.history.back();
       this.getUser(this.oneUser_id);
       this.getAllPosts();
     }).catch(reject => {
@@ -163,25 +152,17 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   }
 
   this.editAvi = (id) => {
-    console.log(this.formData);
-    console.log(id);
     $http({
       method: "PUT",
-      url: "http://localhost:3000/users/" + id,
+      url: this.url + "/users/" + id,
       data: this.formData,
       headers: {
-               Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
       }
     }).then(response => {
-      console.log(response);
-      console.log(this.formData);
       this.oneUser[0].user.avatar = this.formData.avatar
-      // this.editAvi=false;
-    //   const updateByIndex = this.users.findIndex(user => user._id === response.data._id)
-    //  this.users.splice(updateByIndex, 1, response.data)
-    //  console.log(this.oneUser[0].user);
-    //  this.oneUser = response.data
-    //  this.formData = {};
+      this.formData = {};
+      console.log('this.oneUser[0].user.avatar:', this.oneUser[0].user.avatar);
     }, error => {
       console.error(error);
     }).catch(err => console.error("Catch: ", err));
@@ -199,11 +180,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       url: this.url + "/bucket_lists",
       data: this.newBucket
     }).then(response => {
-      console.log(this.newBucket);
-      console.log(response.data);
       this.bucket_lists.push(response.data)
-      console.log(this.bucket_lists);
-      console.log(this.user);
       this.getAllPosts();
     }).catch(error => {
       console.log('error:', error);
@@ -220,14 +197,103 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       this.post = response.data;
       this.list_items.unshift(this.post);
       this.createPost(this.post.id, this.user.id)
-      console.log(this.user);
       this.formdata = {}
+      console.log('this.post:', this.post);
     }).catch(error => {
       console.log('error:', error);
     });
   }
 
+  // Experimenting!!!
+
+  this.getTodoList = (id) => {
+    $http({
+      url: this.url + "/users/" + id + "/bucket_lists/todo",
+      method: "GET"
+    }).then(response => {
+      this.todoList = response.data;
+      this.getCompletedList(id, this.todoList)
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+  this.getCompletedList = (id, todoList) => {
+    $http({
+      url: this.url + "/users/" + id + "/bucket_lists/completed",
+      method: "GET"
+    }).then(response => {
+      this.completedList = response.data;
+      this.dragDropLists(todoList, this.completedList)
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+
+  this.dragDropLists = (todoList, completedList) => {
+    $scope.models = {
+        selected: null,
+        lists: {"todo": [], "completed": []}
+    };
+
+    for (let i = 0; i < todoList.length; i++) {
+      $scope.models.lists.todo.push({
+        label: todoList[i].list_item.title,
+        list_item_id: todoList[i].list_item.id,
+        id: todoList[i].id
+      })
+    }
+
+    for (let i = 0; i < completedList.length; i++) {
+      $scope.models.lists.completed.push({
+        label: completedList[i].list_item.title,
+        list_item_id: completedList[i].list_item.id,
+        id: completedList[i].id
+      })
+    }
+
+  }
+
+  this.getOneBucketList = (id, completed) => {
+    $http({
+      url: this.url + "bucket_lists/" + id,
+      method: "GET"
+    }).then(response => {
+      this.bucket_list = response.data;
+      console.log(this.bucket_list);
+      this.updateOneBucketList(this.bucket_list, completed)
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+  this.updateOneBucketList = (bucketList, completed) => {
+    console.log(bucketList);
+    console.log(bucketList.id + ' completed?', completed);
+    $http({
+      method: "PUT",
+      url: this.url + "bucket_lists/" + bucketList.id,
+      data: {
+        bucket_list: {
+          user_id: bucketList.user_id,
+          list_item_id: bucketList.list_item_id,
+          completed: completed
+        }
+      }
+    }).then(response => {
+      bucketList.completed = completed;
+      console.log(response.data);
+      console.log(bucketList);
+    }).catch(error => {
+      console.log('error:', error);
+    });
+  }
+
+
+
 }]);
+
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
@@ -244,12 +310,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     templateUrl: "../partials/profile.html"
   })
 
-  // $routeProvider.when("/goal/:id", {
-  //   templateUrl: "../partials/one_goal.html"
-  // })
-
   $routeProvider.when("/user/:id", {
     templateUrl: "../partials/user.html"
   })
-
 }]);

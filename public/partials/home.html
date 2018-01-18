@@ -1,4 +1,4 @@
-  <div class="list-goal" ng-repeat="goal in ctrl.list_items | orderBy:'updated_at':true" ng-click="ctrl.homeItemModal = true; ctrl.getOne(goal.id)">
+  <div class="list-goal jiggle" ng-repeat="goal in ctrl.list_items | orderBy:'updated_at':true" ng-click="ctrl.homeItemModal = true; ctrl.getOne(goal.id);">
     <!-- <a href="/goal/{{goal.id}}" ng-click="ctrl.getOne(goal.id)"> -->
       {{goal.title}}
     <!-- </a> -->

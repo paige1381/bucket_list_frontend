@@ -1,14 +1,10 @@
-@font-face {
-  font-family: "Qanelas Soft";
-  src: url(QanelasSoftDEMO-ExtraBold.otf);
-}
-
 html {
   height: 100%;
 }
 
 body {
-  background: #f7f7f7;
+  background: #f7f7f7 url('../images/logo.png') no-repeat;
+  background-position: bottom left;
   position: relative;
   height: 100%;
   width: 100%;
@@ -67,11 +63,35 @@ header ul {
   cursor: pointer;
 }
 
+.small-logo {
+  overflow: hidden;
+  height: 60px;
+  position: absolute;
+  right: 0;
+  padding: 3px 10px 0 0;
+  box-sizing: border-box;
+}
+
+.small-logo img {
+  height: 55px;
+}
+
 .content-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
+}
+
+.fade {
+  background: -webkit-linear-gradient(bottom, rgba(247,247,247,1) 0%,rgba(247,247,247,0) 100%);
+  width: 80%;
+  z-index: 100;
+  height: 200px;
+  position: absolute;
+  /*top: 50%;*/
+  margin-left: 20%;
+  bottom: 2em;
 }
 
 /*
@@ -90,8 +110,8 @@ header ul {
 .user-head {
   display: flex;
   flex-direction: row;
-  margin-top: 50px;
-  margin: auto;
+  margin: 20px auto;
+  margin-bottom: 40px;
 }
 
 .user-head h1 {
@@ -116,36 +136,51 @@ header ul {
   border-radius: 1em;
 }
 
+
+.av-cont {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 1em;
+}
+
 .edit {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  background: rgba(255,255,255,.5);
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,.6);
   opacity: 0;
   transition: .7s;
   z-index: 99;
-  border-radius: 1em;
+  color: #525252;
+  font-family: 'Mukta Malar', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
 }
 .edit:hover {
   opacity: 1;
 }
 
-.edit-modal {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: none;
-  z-index: 100;
+img.user-av {
+  max-height: 120px;
+  max-width: 120px;
 }
 
-.edit-form {
+.bg {
   position: absolute;
-  width: 500px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
+  left: 0;
+  top: 60px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 nav {
@@ -179,11 +214,6 @@ input {
   float: left;
 }*/
 
-.menu.open {
-  width: 10em;
-  padding: 1em;
-}
-
 nav ul {
   margin: 0;
   padding-top: 0px;
@@ -212,10 +242,12 @@ nav li:hover {
   margin: 0;
   color: #525252;
   font-family: 'Mukta Malar', sans-serif;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 800;
-  padding: 0;
+  padding: 5px 5px;
   line-height: 30px;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 main {
@@ -262,7 +294,7 @@ main {
 .todo {
   width: 25em;
   height: 90%;
-  background: #f4f4f4;
+  background: #eee;
   float: left;
   display: flex;
   flex-direction: column;
@@ -273,15 +305,16 @@ main {
 .todo-items {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .complete {
   width: 25em;
   height: 90%;
-  background: #f4f4f4;
+  background: #eee;
   float: right;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border-radius: 1em 1em 0 0;
   margin-left: 10px;
 }
@@ -315,20 +348,18 @@ main {
 
 .jiggle {
   animation: jiggle 0.2s 5;
-  transform: rotate(-3deg);
   -webkit-animation: jiggle 0.2s 5;
-  -webkit-transform: rotate(-3deg);
 }
 
 .nav_icon {
   width: 3em;
   height: 3em;
-  position: fixed;
+  /*position: fixed;*/
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-left: 1em;
-  /*background: black;*/
+  /*z-index: 100;*/
 }
 
 .burg1, .burg2, .burg3 {
@@ -339,17 +370,6 @@ main {
   margin: .1em;
   transition: 0.4s;
   display: block;
-}
-.burg1.close {
-  -webkit-transform: rotate(-45deg) translate(-.2em, .3em);
-  transform: rotate(-45deg) translate(-.2em, .3em);
-}
-.burg2.close{
-  width: 0;
-}
-.burg3.close {
-  -webkit-transform: rotate(45deg) translate(-.3em, -.6em);
-  transform: rotate(45deg) translate(-.3em, -.6em);
 }
 
 .dim {
@@ -386,20 +406,24 @@ main {
   animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-/*.modal > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 40px 0;
-}*/
-
 h3.close {
   cursor: pointer;
   text-align: right;
   font-size: 24px;
   margin-top: 5px;
   padding: 0;
+}
+
+h3.close-modal {
+  line-height: 20px;
+  margin: 0;
+}
+
+.close-box {
+  width: 100%;
+  text-align: left;
+  padding-top: 5px;
+  padding-left: 5px;
 }
 
 h3.log-reg {
@@ -495,6 +519,33 @@ h3.new-goal-modal {
   line-height: 60px;
   width: 200px;
   margin-top: 45px;
+}
+
+h3.edit-av-modal {
+  color: #383838;
+  font-family: 'Mukta Malar', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 60px;
+  width: 300px;
+  margin-top: 45px;
+}
+
+h4.new-image {
+  color: #383838;
+  font-family: sans-serif;
+  font-size: 20px;
+  line-height: 0;
+}
+
+.change-av-form {
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  float: left;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 40px;
 }
 
 .modal button {
@@ -628,18 +679,18 @@ footer {
 
 @keyframes slide-bottom {
   0% {
-    transform: translateY(-300px);
+    -webkit-transform: translateY(-300px);
   }
   100% {
-    transform: translateY(auto);
+    -webkit-transform: translateY(auto);
   }
 }
 
 @-webkit-keyframes jiggle {
-    0% {
-        -webkit-transform: rotate(-1deg);
-        }
-    50% {
-        -webkit-transform: rotate(1deg);
-    }
+  0% {
+    -webkit-transform: rotate(-1deg);
+  }
+  50% {
+    -webkit-transform: rotate(1deg);
+  }
 }

@@ -1,11 +1,7 @@
-<div class="nav_icon">
-  <div class="burg1"></div>
-  <div class="burg2"></div>
-  <div class="burg3"></div>
+<div class="ex" ng-click="ctrl.openTheNav = false">close
 </div>
-  <div class="ex">X</li>
-  <ul class="navigation">
-    <a class="close-it" href="/"><li>home</li></a>
-    <li ng-click="ctrl.createPostModal = true">new</li>
-    <a href="#"><li>profile</li></a>
-  </ul>
+<ul class="navigation">
+  <a class="close-it" href="/" ng-click="ctrl.openTheNav = false"><li>home</li></a>
+  <li ng-click="ctrl.createPostModal = true; ctrl.openTheNav = false">new</li>
+  <a href="#" ng-click="ctrl.openTheNav = false"><li>profile</li></a>
+</ul>
