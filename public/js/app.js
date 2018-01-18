@@ -131,6 +131,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
       method: "GET"
     }).then(response => {
       this.oneGoal = response.data;
+      this.bucket_list = bucket_list_id;
       console.log('this.oneGoal:', this.oneGoal);
     }).catch(reject => {
       console.log('reject: ', reject);
@@ -139,6 +140,7 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
 
   // delete one bucket_list
   this.deleteOne = (id) => {
+    console.log(id);
     $http({
       url: this.url + "/bucket_lists/" + id,
       method: "DELETE"

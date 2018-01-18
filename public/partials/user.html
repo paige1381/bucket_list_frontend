@@ -46,31 +46,11 @@
       </div>
     </div>
 
-
-  <!-- <div class="user-lists">
-      <div class="todo">
-        <h2>to do</h2>
-        <div class="todo-items">
-          <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
-              {{goal.list_item.title}}
-          </div>
-        </div>
-      </div>
-      <div class="complete">
-        <h2>complete</h2>
-        <div class="todo-items">
-          <div class="list-goal" ng-repeat="goal in ctrl.oneUser | orderBy:'updated_at':true" ng-click="ctrl.profileItemModal = true; ctrl.getOne(goal.list_item.id, goal.id)">
-              {{goal.list_item.title}}
-          </div>
-        </div>
-      </div>
-    </div> -->
-
   </div>
 
 <div class="dim" ng-class="(ctrl.profileItemModal? 'item-modal' : '')">
   <div class="modal">
-    <!-- <h3 class="close" ng-click="ctrl.homeItemModal = false"><i class="material-icons">close</i></h3> -->
+    <div class="close-box"><h3 class="close-modal" ng-click="ctrl.profileItemModal = false"><i class="material-icons">close</i></h3></div>
     <div class="show-cont">
       <div class="show-left">
         <h4 class="created-by" ng-if="ctrl.oneGoal.users[0].username">
@@ -82,7 +62,7 @@
         <h3 class="show-post">{{ctrl.oneGoal.title}}</h3>
         <p>{{ctrl.oneGoal.content}}</p>
       </div>
-        <button ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
+        <button class="new-button delete" ng-click="ctrl.deleteOne(ctrl.bucket_list); ctrl.profileItemModal = false">delete</button>
     </div>
   </div>
 </div>
@@ -91,6 +71,7 @@
 
 <div class="dim" ng-class="(ctrl.editAvatarModal? 'item-modal' : '')">
   <div class="modal new">
+    <div class="close-box"><h3 class="close-modal" ng-click="ctrl.editAvatarModal = false"><i class="material-icons">close</i></h3></div>
     <div class="left">
     <h3 class="edit-av-modal">change your avatar</h3>
       <form ng-submit="ctrl.editAvi(ctrl.oneUser[0].user.id)">
