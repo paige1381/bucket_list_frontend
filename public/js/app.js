@@ -14,10 +14,12 @@ app.controller('MainController', ['$http', '$scope', '$sce', function($http, $sc
   this.profileItemModal = false;
   this.loginItemModal = false;
   this.signUpItemModal = false;
-
+  this.createPostModal = false;
+  this.editAvatarModal = false;
+  this.openTheNav = false;
 
   //server location
-  this.url = 'http://localhost:3000/';
+  this.url = 'http://localhost:3000';
 
   // log in function
   this.login = (userPass) => {

@@ -1,21 +1,7 @@
-<div class="nav_icon">
-  <div class="burg1"></div>
-  <div class="burg2"></div>
-  <div class="burg3"></div>
+<div class="ex" ng-click="ctrl.openTheNav = false">close
 </div>
-<!-- <div class="menu"> -->
-  <div class="ex">X</li>
-  <ul>
-    <a class="close-it" href="/"><li>home</li></a>
-    <a href="#"><li>new</li></a>
-    <a href="#"><li>profile</li></a>
-  </ul>
-  <!-- <form ng-submit="ctrl.processForm()">
-    <input type = "text" ng-model="ctrl.formdata.title" placeholder="Goal Title">
-    <input type = "text" ng-model="ctrl.formdata.content" placeholder="About Your Goal">
-    <input type = "text" ng-model="ctrl.formdata.img" placeholder="Image URL">
-    <input type="hidden" ng-model="ctrl.formdata.user.id" /><br>
-    <input type="submit">
-  </form> -->
-
-<!-- </div> -->
+<ul class="navigation">
+  <a class="close-it" href="/" ng-click="ctrl.openTheNav = false"><li>home</li></a>
+  <li ng-click="ctrl.createPostModal = true; ctrl.openTheNav = false">new</li>
+  <a href="#" ng-click="ctrl.openTheNav = false"><li>profile</li></a>
+</ul>

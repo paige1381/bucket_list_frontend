@@ -1,20 +1,21 @@
-  <div class="list-goal" ng-repeat="goal in ctrl.list_items | orderBy:'updated_at':true" ng-click="ctrl.homeItemModal = true; ctrl.getOne(goal.id)">
-    <!-- <a href="/goal/{{goal.id}}" ng-click="ctrl.getOne(goal.id)"> -->
+  <div class="list-goal jiggle" ng-repeat="goal in ctrl.list_items | orderBy:'updated_at':true" ng-click="ctrl.homeItemModal = true; ctrl.getOne(goal.id);">
       {{goal.title}}
-    <!-- </a> -->
   </div>
 
   <div class="dim" ng-class="(ctrl.homeItemModal? 'item-modal' : '')">
     <div class="modal">
-      <h3 class="close" ng-click="ctrl.homeItemModal = false"><i class="material-icons">close</i></h3>
-      <h3>{{ctrl.oneGoal.title}}</h3>
-
-      <h4 ng-if="ctrl.oneGoal.users[0].username">
-        created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.homeItemModal = false; ctrl.getUser(ctrl.oneGoal.users[0].id)">{{ctrl.oneGoal.users[0].username}}</a>
-      </h4>
-      <div>
-        <img class="modal-img" src="{{ctrl.oneGoal.img}}" alt="No image found">
-        <p>{{ctrl.oneGoal.content}}</p>
+      <div class="close-box"><h3 class="close-modal" ng-click="ctrl.homeItemModal = false"><i class="material-icons">close</i></h3></div>
+      <div class="show-cont">
+        <div class="show-left">
+          <h4 class="created-by" ng-if="ctrl.oneGoal.users[0].username">
+            created by: <a href="/user/{{ctrl.oneGoal.users[0].id}}" ng-click="ctrl.getUser(ctrl.oneGoal.users[0].id); ctrl.homeItemModal = false">{{ctrl.oneGoal.users[0].username}}</a>
+          </h4>
+          <img src="{{ctrl.oneGoal.img}}" alt="No image found">
+        </div>
+        <div class="show-right">
+          <h3 class="show-post">{{ctrl.oneGoal.title}}</h3>
+          <p>{{ctrl.oneGoal.content}}</p>
+        </div>
       </div>
     </div>
   </div>
